@@ -1,4 +1,9 @@
 from flask import Flask, render_template, request, jsonify
+import os
+import json 
+import requests as rq
+from bs4 import BeautifulSoup
+from urllib.request import urlopen as uReq
 
 app = Flask(__name__)
 
@@ -6,35 +11,37 @@ app = Flask(__name__)
 def home_page():
     return render_template('index.html')
 
-@app.route('/math', methods=['GET','POST'])  # This will be called from UI
+@app.route('/photos', methods=['GET','POST'])  # This will be called from UI
 def math_operation():
     if request.method == 'POST':
 
-        # age = request.form['age']
+        query =str(request.form['image'])
+        #n_images = int(request.form['number'])
 
-        image = request.form['image']
-        number = request.form['number']
-        hell = image+number
-        # operation=request.form['operation']
-        # num1=int(request.form['num1'])
-        # num2 = int(request.form['num2'])
-        # print(num1)
-        # print(num2)
-        # if(operation=='add'):
-        #     r=num1+num2
-        #     result= 'the sum of '+str(num1)+' and '+str(num2) +' is '+str(r)
-        # if (operation == 'subtract'):
-        #     r = num1 - num2
-        #     result = 'the difference of ' + str(num1) + ' and ' + str(num2) + ' is ' + str(r)
-        # if (operation == 'multiply'):
-        #     r = num1 * num2
-        #     result = 'the product of ' + str(num1) + ' and ' + str(num2) + ' is ' + str(r)
-        # if (operation == 'divide'):
-        #     r = num1 / num2
-        #     result = 'the quotient when ' + str(num1) + ' is divided by ' + str(num2) + ' is ' + str(r)
+        site = "https://www.shutterstock.com/search/"
+
+        
+        searchquery = site+query
+        print(searchquery)
+
+        client = uReq(searchquery)
+
+        #r2 = rq.get(searchquery).text
+
+        soup3 = BeautifulSoup(client.read(), 'html.parser')
+
+        links = []
+        for link in soup3.find_all("img", {"class": "z_h_c z_h_e"}):
+            imageLink = link['src']
+            links.append(imageLink)
 
 
-        return render_template('results.html',result=hell)
+
+        
+        
+
+
+        return render_template('results.html',result=links)
 
     return render_template('index.html')    
 
