@@ -4,6 +4,7 @@ import json
 import requests as rq
 from bs4 import BeautifulSoup
 from urllib.request import urlopen as uReq
+import glob
 
 app = Flask(__name__)
 
@@ -35,20 +36,22 @@ def math_operation():
                 imageLink = link['src']
                 links.append(imageLink)
 
-            # image_data = []
-            # for index,img_link in enumerate(links):
-            #     img_data = rq.get(img_link).content
-            #     image_data.append(img_data)  
-
+             
+            images_names = []
             for index,img_link in enumerate(links):
                 img_data = rq.get(img_link).content
                 with open(target_folder+"/"+str(index+1)+'.jpg','wb+') as f:
+                    images_names.append(img_data)
                     f.write(img_data)
 
-
-            return render_template('results.html',result=links)
-        else:
-            pass
+            #fetchingfiles = target_folder+'/*.jpg'
+            #final_target_files = glob.glob(fetchingfiles)
+        target_file_path = 'photos/'+query.lower()+'/'
+        final_target_files = os.listdir(target_folder)
+        print(target_file_path)
+        return render_template('results.html',target_file_path = target_file_path , final_target_files=final_target_files)
+        
+            
     return render_template('index.html')    
 
 if __name__ == '__main__':

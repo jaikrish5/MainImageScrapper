@@ -10,9 +10,15 @@
 </head>
 <body>
   <div class="table-users">
-   <div class="header">Calculation Result</div>
+   <div class="header">Photos</div>
 
-      {{result}}
+    {%for item in final_target_files%}
+
+
+    
+    <img src="{{url_for('static',filename=target_file_path+item)}}">
+
+    {% endfor %}
 </div>
 </body>
 </html>
