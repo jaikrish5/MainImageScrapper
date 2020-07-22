@@ -49,7 +49,7 @@ def math_operation():
         target_file_path = 'photos/'+query.lower()+'/'
         final_target_files = os.listdir(target_folder)
         print(target_file_path)
-        return render_template('results.html',target_file_path = target_file_path , final_target_files=final_target_files)
+        return render_template('results1.html',target_file_path = target_file_path , final_target_files=final_target_files)
         
             
     return render_template('index.html')    
