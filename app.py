@@ -9,7 +9,7 @@ import glob
 app = Flask(__name__)
 
 APP_ROOT = os.path.dirname(os.path.abspath(__file__))
-print(APP_ROOT)
+
 
 @app.route('/', methods=['GET', 'POST']) # To render Homepage
 def home_page():
@@ -20,21 +20,27 @@ def math_operation():
     if request.method == 'POST':
 
         query =str(request.form['image'])
+        query=str(query.replace(" ","+"))
+        print(query)
 
         target = os.path.join(APP_ROOT,'static\\photos\\')
         target_folder = os.path.join(target, '_'.join(query.lower().split(' ')))
-        print(target_folder)
+        
         if not os.path.exists(target_folder):
             os.makedirs(target_folder)
             site = "https://www.shutterstock.com/search/"
             searchquery = site+query
-            print(searchquery)
+            
             client = uReq(searchquery)
             soup3 = BeautifulSoup(client.read(), 'html.parser')
             links = []
             for link in soup3.find_all("img", {"class": "z_h_c z_h_e"}):
-                imageLink = link['src']
-                links.append(imageLink)
+                try:
+                    imageLink = link['src']
+                    links.append(imageLink)
+                except:
+                    imageLink = None    
+                
 
              
             images_names = []
@@ -48,7 +54,7 @@ def math_operation():
             #final_target_files = glob.glob(fetchingfiles)
         target_file_path = 'photos/'+query.lower()+'/'
         final_target_files = os.listdir(target_folder)
-        print(target_file_path)
+        
         return render_template('results1.html',target_file_path = target_file_path , final_target_files=final_target_files)
         
             
