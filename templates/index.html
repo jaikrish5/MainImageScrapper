@@ -6,7 +6,33 @@
     <meta name="author" content="colorlib.com">
     <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet" />
     <link href="{{url_for('static',filename='css/main.css')}}" rel="stylesheet" />
+
+    
+
+    <style>
+
+    /* Paste this css to your style sheet file or under head tag */
+    /* This only works with JavaScript, 
+    if it's not present, don't show loader */
+    .no-js #loader { display: none;  }
+    .js #loader { display: block; position: absolute; left: 100px; top: 0; }
+    .se-pre-con {
+      position: fixed;
+      left: 0px;
+      top: 0px;
+      width: 100%;
+      height: 100%;
+      z-index: 9999;
+      background: url(https://smallenvelop.com/wp-content/uploads/2014/08/Preloader_11.gif) center no-repeat #fff;
+    }
+
+    </style>
+
+    
   </head>
+  
+
+
   <body>
     <div class="s01">
 
@@ -19,16 +45,30 @@
           <div class="input-field first-wrap">
             <input id="search" name='image' type="text" placeholder="What Image are you looking for?" />
           </div>
-          <div class="input-field second-wrap">
+          <!-- <div class="input-field second-wrap">
             <input id="location" name='number' type="text" placeholder="number of Images" />
-          </div>
+          </div> -->
           <div class="input-field third-wrap">
             <!-- <button class="btn-search" type="button">Search</button> -->
-            <input type="submit" class="btn-search" value="Calculate">
+            <input type="submit" class="btn-search" value="Discover">
           </div>
-        </div>
+
+          
       </form>
 
     </div>
+    <div class="se-pre-con"></div>
   </body>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
+//paste this code under the head tag or in a separate js file.
+  // Wait for window load
+  <script>
+	$(window).load(function() {
+		// Animate loader off screen
+		$(".se-pre-con").fadeOut("slow");;
+	});
+  </script>
+
+
   </html>
