@@ -5,6 +5,8 @@ import requests as rq
 from bs4 import BeautifulSoup
 from urllib.request import urlopen as uReq
 import glob
+import pymongo
+
 
 app = Flask(__name__)
 
