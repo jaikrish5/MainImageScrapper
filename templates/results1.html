@@ -109,15 +109,17 @@
 				</div>
 			</div> -->
 
-			{%for item in final_target_files%}
-			<div class="mix grid-item fashion">
+			 {%for item in links%}
+			 <div class="mix grid-item fashion">
 				<div class="grid-portfolio">
+					<img src={{item}} class='center'> 
 
-					<!-- <img src="img/portfolio-2/5.jpg" alt=""> -->
-					<img src="{{url_for('static',filename=target_file_path+item)}}" class='center'>
+					
+					
 				</div>
-			</div>
-			{% endfor %}
+			</div> 
+			
+			{% endfor %} 
 
 			<!-- <div class="mix grid-item grid-width-2 nature">
 				<div class="grid-portfolio">

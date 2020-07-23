@@ -22,45 +22,36 @@ def math_operation():
     if request.method == 'POST':
 
         query =str(request.form['image'])
-        query=str(query.replace(" ","+"))
-        print(query)
-
-        target = os.path.join(APP_ROOT,'static\\photos\\')
-        target_folder = os.path.join(target, '_'.join(query.lower().split(' ')))
+        spacequery=str(query.replace(" ","+"))
+        dbname = query.replace(" ","")
         
-        if not os.path.exists(target_folder):
-            os.makedirs(target_folder)
-            site = "https://www.shutterstock.com/search/"
-            searchquery = site+query
-            
-            client = uReq(searchquery)
-            soup3 = BeautifulSoup(client.read(), 'html.parser')
-            links = []
-            for link in soup3.find_all("img", {"class": "z_h_c z_h_e"}):
-                try:
-                    imageLink = link['src']
-                    links.append(imageLink)
-                except:
-                    imageLink = None    
+        site = "https://www.shutterstock.com/search/"
+        
+        searchquery = site+spacequery
+        client = uReq(searchquery)
+        soup3 = BeautifulSoup(client.read(), 'html.parser')
+        links = []
+        for link in soup3.find_all("img", {"class": "z_h_c z_h_e"}):
+            try:
+                imageLink = link['src']
+                links.append(imageLink)
+            except:
+                imageLink = None    
+        images_names = []
                 
 
-             
-            images_names = []
-            for index,img_link in enumerate(links):
-                img_data = rq.get(img_link).content
-                with open(target_folder+"/"+str(index+1)+'.jpg','wb+') as f:
-                    images_names.append(img_data)
-                    f.write(img_data)
+        # for index,img_link in enumerate(links):
+        #             img_data = rq.get(img_link).content
+        #             my_dict = {'image':img_data,'imagelink':img_link}
+        #             db[dbname].insert(my_dict) 
+        #             images_names.append(my_dict)
 
-            #fetchingfiles = target_folder+'/*.jpg'
-            #final_target_files = glob.glob(fetchingfiles)
-        target_file_path = 'photos/'+query.lower()+'/'
-        final_target_files = os.listdir(target_folder)
+        print(links)
+                   
+        return render_template('results1.html',links=links)
         
-        return render_template('results1.html',target_file_path = target_file_path , final_target_files=final_target_files)
-        
-            
-    return render_template('index.html')    
+    else:
+        return render_template('index.html')    
 
 if __name__ == '__main__':
     app.run(debug=True)        
