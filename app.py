@@ -31,9 +31,9 @@ def math_operation():
         for i in range(1,6):
             
             alternate_site = 'https://www.shutterstock.com/search/'+str(spacequery)+'?page='+str(i)
-            print(alternate_site)
+            
             client = uReq(alternate_site)
-            print(client)
+            
             soup3 = BeautifulSoup(client.read(), 'html.parser')
             
             for link in soup3.find_all("img", {"class": "z_h_c z_h_e"}):
