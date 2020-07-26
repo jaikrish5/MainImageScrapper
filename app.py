@@ -26,28 +26,25 @@ def math_operation():
         dbname = query.replace(" ","")
         
         site = "https://www.shutterstock.com/search/"
-        
-        searchquery = site+spacequery
-        client = uReq(searchquery)
-        soup3 = BeautifulSoup(client.read(), 'html.parser')
         links = []
-        for link in soup3.find_all("img", {"class": "z_h_c z_h_e"}):
-            try:
-                imageLink = link['src']
-                links.append(imageLink)
-            except:
-                imageLink = None    
-        images_names = []
-                
 
-        # for index,img_link in enumerate(links):
-        #             img_data = rq.get(img_link).content
-        #             my_dict = {'image':img_data,'imagelink':img_link}
-        #             db[dbname].insert(my_dict) 
-        #             images_names.append(my_dict)
+        for i in range(1,6):
+            
+            alternate_site = 'https://www.shutterstock.com/search/'+str(spacequery)+'?page='+str(i)
+            print(alternate_site)
+            client = uReq(alternate_site)
+            print(client)
+            soup3 = BeautifulSoup(client.read(), 'html.parser')
+            
+            for link in soup3.find_all("img", {"class": "z_h_c z_h_e"}):
+                try:
+                    imageLink = link['src']
+                    links.append(imageLink)
+                except:
+                    imageLink = None 
 
-        print(links)
                    
+        print(len(links))                         
         return render_template('results1.html',links=links)
         
     else:
