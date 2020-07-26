@@ -28,7 +28,7 @@ def math_operation():
         site = "https://www.shutterstock.com/search/"
         links = []
 
-        for i in range(1,3):
+        for i in range(1,6):
             
             alternate_site = 'https://www.shutterstock.com/search/'+str(spacequery)+'?page='+str(i)
             
