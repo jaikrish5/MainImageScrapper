@@ -36,7 +36,7 @@ def math_operation():
             
             soup3 = BeautifulSoup(client.read(), 'html.parser')
             
-            for link in soup3.find_all("img", {"class": "z_h_c z_h_e"}):
+            for link in soup3.find_all("img", {"class": "z_h_9d80b z_h_2f2f0"}):
                 try:
                     imageLink = link['src']
                     links.append(imageLink)
